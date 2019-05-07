@@ -1,8 +1,11 @@
-const bluebird = require('bluebird');
-const crypto = bluebird.promisifyAll(require('crypto'));
+const { promisify } = require('util');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
+const _ = require('lodash');
 const User = require('../models/User');
+
+const randomBytesAsync = promisify(crypto.randomBytes);
 
 /**
  * GET /login
@@ -53,7 +56,11 @@ exports.postLogin = (req, res, next) => {
  */
 exports.logout = (req, res) => {
   req.logout();
-  res.redirect('/');
+  req.session.destroy((err) => {
+    if (err) console.log('Error : Failed to destroy the session during logout.', err);
+    req.user = null;
+    res.redirect('/');
+  });
 };
 
 /**
@@ -186,7 +193,7 @@ exports.postUpdatePassword = (req, res, next) => {
  * Delete user account.
  */
 exports.postDeleteAccount = (req, res, next) => {
-  User.remove({ _id: req.user.id }, (err) => {
+  User.deleteOne({ _id: req.user.id }, (err) => {
     if (err) { return next(err); }
     req.logout();
     req.flash('info', { msg: 'Your account has been deleted.' });
@@ -199,14 +206,29 @@ exports.postDeleteAccount = (req, res, next) => {
  * Unlink OAuth provider.
  */
 exports.getOauthUnlink = (req, res, next) => {
-  const provider = req.params.provider;
+  const { provider } = req.params;
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
-    user[provider] = undefined;
-    user.tokens = user.tokens.filter(token => token.kind !== provider);
+    user[provider.toLowerCase()] = undefined;
+    const tokensWithoutProviderToUnlink = user.tokens.filter(token =>
+      token.kind !== provider.toLowerCase());
+    // Some auth providers do not provide an email address in the user profile.
+    // As a result, we need to verify that unlinking the provider is safe by ensuring
+    // that another login method exists.
+    if (
+      !(user.email && user.password)
+      && tokensWithoutProviderToUnlink.length === 0
+    ) {
+      req.flash('errors', {
+        msg: `The ${_.startCase(_.toLower(provider))} account cannot be unlinked without another form of login enabled.`
+          + ' Please link another account or add an email address and password.'
+      });
+      return res.redirect('/account');
+    }
+    user.tokens = tokensWithoutProviderToUnlink;
     user.save((err) => {
       if (err) { return next(err); }
-      req.flash('info', { msg: `${provider} account has been unlinked.` });
+      req.flash('info', { msg: `${_.startCase(_.toLower(provider))} account has been unlinked.` });
       res.redirect('/account');
     });
   });
@@ -272,7 +294,7 @@ exports.postReset = (req, res, next) => {
 
   const sendResetPasswordEmail = (user) => {
     if (!user) { return; }
-    const transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
       service: 'SendGrid',
       auth: {
         user: process.env.SENDGRID_USER,
@@ -288,6 +310,28 @@ exports.postReset = (req, res, next) => {
     return transporter.sendMail(mailOptions)
       .then(() => {
         req.flash('success', { msg: 'Success! Your password has been changed.' });
+      })
+      .catch((err) => {
+        if (err.message === 'self signed certificate in certificate chain') {
+          console.log('WARNING: Self signed certificate in certificate chain. Retrying with the self signed certificate. Use a valid certificate if in production.');
+          transporter = nodemailer.createTransport({
+            service: 'SendGrid',
+            auth: {
+              user: process.env.SENDGRID_USER,
+              pass: process.env.SENDGRID_PASSWORD
+            },
+            tls: {
+              rejectUnauthorized: false
+            }
+          });
+          return transporter.sendMail(mailOptions)
+            .then(() => {
+              req.flash('success', { msg: 'Success! Your password has been changed.' });
+            });
+        }
+        console.log('ERROR: Could not send password reset confirmation email after security downgrade.\n', err);
+        req.flash('warning', { msg: 'Your password has been changed, however we were unable to send you a confirmation email. We will be looking into it shortly.' });
+        return err;
       });
   };
 
@@ -325,8 +369,7 @@ exports.postForgot = (req, res, next) => {
     return res.redirect('/forgot');
   }
 
-  const createRandomToken = crypto
-    .randomBytesAsync(16)
+  const createRandomToken = randomBytesAsync(16)
     .then(buf => buf.toString('hex'));
 
   const setRandomToken = token =>
@@ -346,7 +389,7 @@ exports.postForgot = (req, res, next) => {
   const sendForgotPasswordEmail = (user) => {
     if (!user) { return; }
     const token = user.passwordResetToken;
-    const transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
       service: 'SendGrid',
       auth: {
         user: process.env.SENDGRID_USER,
@@ -365,6 +408,28 @@ exports.postForgot = (req, res, next) => {
     return transporter.sendMail(mailOptions)
       .then(() => {
         req.flash('info', { msg: `An e-mail has been sent to ${user.email} with further instructions.` });
+      })
+      .catch((err) => {
+        if (err.message === 'self signed certificate in certificate chain') {
+          console.log('WARNING: Self signed certificate in certificate chain. Retrying with the self signed certificate. Use a valid certificate if in production.');
+          transporter = nodemailer.createTransport({
+            service: 'SendGrid',
+            auth: {
+              user: process.env.SENDGRID_USER,
+              pass: process.env.SENDGRID_PASSWORD
+            },
+            tls: {
+              rejectUnauthorized: false
+            }
+          });
+          return transporter.sendMail(mailOptions)
+            .then(() => {
+              req.flash('info', { msg: `An e-mail has been sent to ${user.email} with further instructions.` });
+            });
+        }
+        console.log('ERROR: Could not send forgot password email after security downgrade.\n', err);
+        req.flash('errors', { msg: 'Error sending the password reset message. Please try again shortly.' });
+        return err;
       });
   };
 
