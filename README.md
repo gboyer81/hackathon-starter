@@ -2,9 +2,9 @@
 Hackathon Starter
 =======================
 
-[![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![Build Status](https://travis-ci.org/sahat/hackathon-starter.svg?branch=master)](https://travis-ci.org/sahat/hackathon-starter) [![Join the chat at https://gitter.im/sahat/hackathon-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/hackathon-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![devDependencies Status](https://david-dm.org/sahat/hackathon-starter/dev-status.svg)](https://david-dm.org/sahat/hackathon-starter?type=dev) [![Build Status](https://travis-ci.org/sahat/hackathon-starter.svg?branch=master)](https://travis-ci.org/sahat/hackathon-starter) [![Join the chat at https://gitter.im/sahat/hackathon-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/hackathon-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Live Demo**: https://hackathon-starter-2018.herokuapp.com
+**Live Demo**: https://hackathon-starter.walcony.com
 
 Jump to [What's new?](https://github.com/sahat/hackathon-starter/blob/master/CHANGELOG.md)
 
@@ -101,7 +101,7 @@ Prerequisites
 -------------
 
 - [MongoDB](https://www.mongodb.com/download-center/community)
-- [Node.js 8.0+](http://nodejs.org)
+- [Node.js 10+](http://nodejs.org)
 - Command Line Tools
  - <img src="http://deluge-torrent.org/images/apple-logo.gif" height="17">&nbsp;**Mac OS X:** [Xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) (or **OS X 10.9+**: `xcode-select --install`)
  - <img src="http://dc942d419843af05523b-ff74ae13537a01be6cfec5927837dcfe.r14.cf1.rackcdn.com/wp-content/uploads/windows-8-50x50.jpg" height="17">&nbsp;**Windows:** [Visual Studio](https://www.visualstudio.com/products/visual-studio-community-vs) OR [Visual Studio Code](https://code.visualstudio.com) + [Windows Subsystem for Linux - Ubuntu](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
@@ -109,9 +109,9 @@ Prerequisites
  - <img src="http://i1-news.softpedia-static.com/images/extra/LINUX/small/slw218news1.png" height="17">&nbsp;**Fedora**: `sudo dnf groupinstall "Development Tools"`
  - <img src="https://en.opensuse.org/images/b/be/Logo-geeko_head.png" height="17">&nbsp;**OpenSUSE:** `sudo zypper install --type pattern devel_basis`
 
-**Note:** If you are new to Node or Express, I recommend to watch
-[Node.js and Express 101](https://www.youtube.com/watch?v=BN0JlMZCtNU)
-screencast by Alex Ford that teaches Node and Express from scratch. Alternatively,
+**Note:** If you are new to Node or Express, you may find
+[Node.js & Express From Scratch series](https://www.youtube.com/watch?v=Ad2ngx6CT0M&list=PLillGF-RfqbYRpji8t4SxUkMxfowG4Kqp&index=3)
+helpful for learning the basics of Node and Express. Alternatively,
 here is another great tutorial for complete beginners - [Getting Started With Node.js, Express, MongoDB](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/).
 
 Getting Started
@@ -159,9 +159,16 @@ to obtain appropriate credentials: Client ID, Client Secret, API Key, or
 Username & Password. You will need to go through each provider to generate new
 credentials.
 
-**Hackathon Starter 2.0 Update:** I have included dummy keys and passwords for
-all API examples to get you up and running even faster. But don't forget to update
-them with *your credentials* when you are ready to deploy an app.
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/RecaptchaLogo.svg/200px-RecaptchaLogo.svg.png" width="200">
+
+- Visit <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin Console</a>
+- Enter your application's name as the **Label**
+- Chose **reCAPTCHA v2**, **"I'm not a robot" Checkbox**
+- Enter *localhost* as the domain.  You can have other domains added in addition to *localhost*
+- Accept the terms and submit the form
+- Copy the *Site Key* and the *Secret key* into `.env`.  These keys will be accessible under Settings, reCAPTCHA keys drop down if you need them again later.
+
+<hr>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1000px-Google_2015_logo.svg.png" width="200">
 
@@ -170,6 +177,8 @@ them with *your credentials* when you are ready to deploy an app.
 - Enter *Project Name*, then click on **Create** button
 - Then click on *APIs & auth* in the sidebar and select *API* tab
 - Click on **Google+ API** under *Social APIs*, then click **Enable API**
+- Click on **Google Drive API** under *G Suite*, then click **Enable API**
+- Click on **Google Sheets API** under *G Suite*, then click **Enable API**
 - Next, under *APIs & auth* in the sidebar click on *Credentials* tab
 - Click on **Create new Client ID** button
 - Select *Web Application* and click on **Configure Consent Screen**
@@ -211,7 +220,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="http://www.doit.ba/img/facebook.jpg" width="200">
+<img src="https://en.facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png" width="90">
 
 - Visit <a href="https://developers.facebook.com/" target="_blank">Facebook Developers</a>
 - Click **My Apps**, then select **Add a New App* from the dropdown menu
@@ -232,11 +241,11 @@ The same goes for other providers.
 
 <hr>
 
-<img src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Logo.png" width="200">
+<img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width="110">
 
 - Go to <a href="https://github.com/settings/profile" target="_blank">Account Settings</a>
 - Select **Developer settings** from the sidebar
-- Then inside click on **Register new application**
+- Then click on **OAuth Apps** and then on **Register new application**
 - Enter *Application Name* and *Homepage URL*
 - For *Authorization Callback URL*: http://localhost:8080/auth/github/callback
 - Click **Register application**
@@ -258,7 +267,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="http://www.danpontefract.com/wp-content/uploads/2014/02/logo-linkedin.png" width="200">
+<img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Logo.svg.original.svg" width="200">
 
 - Sign in at <a href="https://developer.linkedin.com/" target="_blank">LinkedIn Developer Network</a>
 - From the account name dropdown menu select **API Keys**
@@ -276,7 +285,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="https://stripe.com/img/about/logos/logos/black@2x.png" width="200">
+<img src="https://stripe.com/img/about/logos/logos/black@2x.png" width="180">
 
 - <a href="https://stripe.com/" target="_blank">Sign up</a> or log into your <a href="https://manage.stripe.com" target="_blank">dashboard</a>
 - Click on your profile and click on Account Settings
@@ -285,7 +294,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="https://pixabay.com/static/uploads/photo/2015/05/26/09/37/paypal-784404_960_720.png" width="200">
+<img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" width="150">
 
 - Visit <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a>
 - Log in to your PayPal account
@@ -328,6 +337,19 @@ The same goes for other providers.
 - Copy and paste *Key* into `.env` file
 
 <hr>
+<img src="https://www.freepnglogos.com/uploads/twitch-logo-image-hd-31.png" height="90">
+
+- Visit the <a href="https://dev.twitch.tv/dashboard/apps" target="_blank">Twitch developer dashboard</a>
+- If prompted, authorize the dashboard to access your twitch account
+- In the Console, click on Register Your Application
+- Enter the name of your application
+- Use OAuth Redirect URLs enter `http://localhost:8080/auth/twitch/callback`
+- Set Category to Website Integration and press the Create button
+- After the applicaiton has been created, click on the Manage button
+- Copy and paste *Client ID* into `.env`
+- If there is no Client Secret displayed, click on New Secret button and then copy and paste the *Client secret* into `.env`
+
+<hr>
 
 <img src="https://sendgrid.com/brand/sg-logo-300.png" width="200">
 
@@ -345,12 +367,30 @@ The same goes for other providers.
 
 <hr>
 
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/HERE_logo.svg" width="90">
+
+- Go to <a href="https://developer.here.com" target="_blank">https://developer.here.com</a>
+- Sign up and create a Freemium project
+- Create JAVASCRIPT/REST credentials. Copy and paste the APP_ID and APP into `.env` file.
+- Note that these credentials are available on the client side, and you need to create a domain whitelist for your app credentials when you are publicly launching the app.
+
+<hr>
+
 <img src="https://s3.amazonaws.com/ahoy-assets.twilio.com/global/images/wordmark.svg" width="200">
 
 - Go to <a href="https://www.twilio.com/try-twilio" target="_blank">https://www.twilio.com/try-twilio</a>
 - Sign up for an account.
 - Once logged into the dashboard, expand the link 'show api credentials'
 - Copy your Account Sid and Auth Token
+
+<hr>
+
+<img src="https://www.intuit.com/content/dam/intuit/intuitcom/company/images/logo-intuit-quickbooks-preferred.png" width="200">
+
+- Go to <a href="https://developer.intuit.com/app/developer/qbo/docs/get-started" target="_blank">https://developer.intuit.com/app/developer/qbo/docs/get-started</a>
+- Use the Sign Up option in the upper right corner of the screen (nav bar) to get a free developer account and a sandbox company.
+- Create a new app by going to your Dashboard using the My Apps option in the top nav bar or by going to <a href="https://developer.intuit.com/app/developer/myapps" target="_blank">https://developer.intuit.com/app/developer/myapps</a>
+- In your App, under Development, Keys & OAuth (right nav), find the Client ID and Client Secret for your `.env` file
 
 Project Structure
 -----------------
@@ -379,7 +419,7 @@ Project Structure
 | .env.example                       | Your API keys, tokens, passwords and database URI.           |
 | .eslintrc                          | Rules for eslint linter.                                     |
 | .gitignore                         | Folder and files ignored by git.                             |
-| .travis.yml                        | Configuration files for continue integration.                |
+| .travis.yml                        | Configuration files for continuous integration.              |
 | app.js                             | The main application file.                                   |
 | docker-compose.yml                 | Docker compose configuration file.                           |
 | Dockerfile                         | Docker configuration file.                                   |
@@ -403,7 +443,6 @@ List of Packages
 | chai                            | BDD/TDD assertion library.                                              |
 | chalk                           | Terminal string styling done right.                                     |
 | cheerio                         | Scrape web pages using jQuery-style syntax.                             |
-| clockwork                       | Clockwork SMS API library.                                              |
 | compression                     | Node.js compression middleware.                                         |
 | connect-mongo                   | MongoDB session store for Express.                                      |
 | dotenv                          | Loads environment variables from .env file.                             |
@@ -416,23 +455,23 @@ List of Packages
 | express-flash                   | Provides flash messages for Express.                                    |
 | express-session                 | Simple session middleware for Express.                                  |
 | express-status-monitor          | Reports real-time server metrics for Express.                           |
-| express-validator               | Easy form validation for Express.                                       |
-| fbgraph                         | Facebook Graph API library.                                             |
 | instagram-node                  | Instagram API library.                                                  |
 | lastfm                          | Last.fm API library.                                                    |
 | lob                             | Lob API library.                                                        |
 | lodash                          | A utility library for working with arrays, numbers, objects, strings.   |
 | lusca                           | CSRF middleware.                                                        |
+| mailchecker                     | Verifies that an email address is valid and not a disposable address.   |
 | mocha                           | Test framework.                                                         |
+| moment                          | Parse, validate, compute dates and times.                               |
 | mongoose                        | MongoDB ODM.                                                            |
 | morgan                          | HTTP request logger middleware for node.js.                             |
 | multer                          | Node.js middleware for handling `multipart/form-data`.                  |
 | node-foursquare                 | Foursquare API library.                                                 |
-| node-linkedin                   | LinkedIn API library.                                                   |
 | node-sass                       | Node.js bindings to libsass.                                            |
 | node-sass-middleware            | Sass middleware compiler.                                               |
 | nyc                             | Coverage test.                                                          |
 | nodemailer                      | Node.js library for sending emails.                                     |
+| node-quickbooks                 | Quickbooks API library.                                                 |
 | passport                        | Simple and elegant authentication library for node.js.                  |
 | passport-facebook               | Sign-in with Facebook plugin.                                           |
 | passport-github                 | Sign-in with GitHub plugin.                                             |
@@ -442,19 +481,19 @@ List of Packages
 | passport-local                  | Sign-in with Username and Password plugin.                              |
 | passport-openid                 | Sign-in with OpenId plugin.                                             |
 | passport-oauth                  | Allows you to set up your own OAuth 1.0a and OAuth 2.0 strategies.      |
+| passport-oauth2-refresh         | A library to refresh OAuth 2.0 access tokens using refresh tokens.      |
 | passport-snapchat               | Sign-in with Snapchat plugin.                                           |
 | passport-twitter                | Sign-in with Twitter plugin.                                            |
+| passport-twitch-new             | Sign-in with Twitch plugin.                                             |
 | paypal-rest-sdk                 | PayPal APIs library.                                                    |
-| pug (jade)                      | Template engine for Express.                                            |
-| request                         | Simplified HTTP request library.                                        |
+| pug                             | Template engine for Express.                                            |
 | sinon                           | Test spies, stubs and mocks for JavaScript.                             |
-| sinon-mongoose                  | Extend Sinon stubs for Mongoose methods to test chained methods easily. |
 | stripe                          | Offical Stripe API library.                                             |
 | supertest                       | HTTP assertion library.                                                 |
 | tumblr.js                       | Tumblr API library.                                                     |
 | twilio                          | Twilio API library.                                                     |
-| twit                            | Twitter API library.                                                    |
-| validator                       | Used in conjunction with express-validator in **controllers/api.js**.   |
+| twitter-lite                    | Twitter API library.                                                    |
+| validator                       | A library of string validators and sanitizers.                          |
 
 Useful Tools and Resources
 --------------------------
@@ -468,7 +507,6 @@ Recommended Design Resources
 ----------------------------
 - [Code Guide](http://codeguide.co/) - Standards for developing flexible, durable, and sustainable HTML and CSS.
 - [Bootsnipp](http://bootsnipp.com/) - Code snippets for Bootstrap.
-- [UIBox](http://www.uibox.in) - Curated HTML, CSS, JS, UI components.
 - [Bootstrap Zero](https://www.bootstrapzero.com) - Free Bootstrap templates themes.
 - [Google Bootstrap](http://todc.github.io/todc-bootstrap/) - Google-styled theme for Bootstrap.
 - [Font Awesome Icons](http://fortawesome.github.io/Font-Awesome/icons/) - It's already part of the Hackathon Starter, so use this page as a reference.
@@ -504,15 +542,13 @@ Recommended Client-side Libraries
 - [X-editable](http://vitalets.github.io/x-editable/) - Edit form elements inline.
 - [Offline.js](http://github.hubspot.com/offline/docs/welcome/) - Detect when user's internet connection goes offline.
 - [Alertify.js](http://fabien-d.github.io/alertify.js/) - Sweet looking alerts and browser dialogs.
-- [selectize.js](http://brianreavis.github.io/selectize.js/) - Styleable select elements and input tags.
+- [selectize.js](http://selectize.github.io/selectize.js) - Styleable select elements and input tags.
 - [drop.js](http://github.hubspot.com/drop/docs/welcome/) -  Powerful Javascript and CSS library for creating dropdowns and other floating displays.
 - [scrollReveal.js](https://github.com/jlmakes/scrollReveal.js) - Declarative on-scroll reveal animations.
 
 Pro Tips
 --------
 
-- When installing an NPM package, add a *--save* flag, and it will be automatically
-added to `package.json` as well. For example, `npm install --save moment`.
 - Use [async.parallel()](https://github.com/caolan/async#parallel) when you need to run multiple
 asynchronous tasks, and then render a page, but only when all tasks are completed. For example, you might want to scrape three different websites for some data and render the results in a template after all three websites have been scraped.
 - Need to find a specific object inside an Array? Use [_.find](http://lodash.com/docs#find)
@@ -890,7 +926,7 @@ If you need to use socket.io in your app, please continue reading.
 
 First, you need to install socket.io:
 ```js
-npm install socket.io --save
+npm install socket.io
 ```
 
 Replace `const app = express();` with the following code:
@@ -969,13 +1005,14 @@ $(document).ready(function() {
   let socket = io.connect(window.location.href);
   socket.on('greet', function (data) {
     console.log(data);
-    socket.emit('respond', { message: 'Hello to you too, Mr.Server!' });
+    socket.emit('respond', { message: 'Hey there, server!' });
   });
 
 });
 ```
 
 And we are done!
+
 Cheatsheets
 -----------
 
@@ -1269,17 +1306,17 @@ create an account with **MongoDB Atlas** and then pick one of the *4* providers 
 Again, there are plenty of other choices, and you are not limited to just the ones
 listed below.
 
-### 1-Step Deployment with Heroku
+### Deployment to Heroku
 
 <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Heroku_logo.png" width="200">
 
 - Download and install [Heroku Toolbelt](https://toolbelt.heroku.com/)
 - In a terminal, run `heroku login` and enter your Heroku credentials
 - From *your app* directory run `heroku create`
-- Run `heroku addons:create mongolab`.  This will set up the mLab add-on and configure the `MONGODB_URI` environment variable in your Heroku app for you.
-- Lastly, do `git push heroku master`.  Done!
+- Use the command `heroku config:set KEY=val` to set the different environment variables (KEY=val) for your application (i.e.  `heroku config:set BASE_URL=[heroku App Name].herokuapp.com` or `heroku config:set MONGODB_URI=mongodb://dbuser:<password>@cluster0-shard-00-00-sdf32.mongodb.net:27017,cluster0-shard-00-01-sdf32.mongodb.net:27017/<dbname>?ssl=true&retryWrites=true&w=majority` (see Hosted MongoDB Atlas below), etc.)  Make sure to set the environment variables for SENDGRID_USER, SENDGRID_PASSWORD, and any other API that you are using as well.
+- Lastly, do `git push heroku master`.
 
-**Note:** To install Heroku add-ons your account must be verified.
+Please note that you may also use the [Herko Dashboard](https://dashboard.heroku.com) to set or modify the configurations for your application.
 
 ---
 
@@ -1301,7 +1338,7 @@ listed below.
 - Next, you will need to create an IP address whitelist and obtain the connection URI.  In the Clusters view, under the cluster details (i.e. SANDBOX - Cluster0), click on the **CONNECT** button.
 - Under section **(1) Check the IP Whitelist**, click on **ALLOW ACCESS FROM ANYWHERE**. The form will add a field with `0.0.0.0/0`.  Click **SAVE** to save the `0.0.0.0/0` whitelist.
 - Under section **(2) Choose a connection method**, click on **Connect Your Application**
-- In the new screen, select **Node.js** as Driver and version **2.2.12 or later**. _*WARNING*_: Do not pick 3.0 or later since connect-mongo can't handle mongodb+srv:// connection strings. 
+- In the new screen, select **Node.js** as Driver and version **2.2.12 or later**. _*WARNING*_: Do not pick 3.0 or later since connect-mongo can't handle mongodb+srv:// connection strings.
 - Finally, copy the URI connection string and replace the URI in MONGODB_URI of `.env.example` with this URI string.  Make sure to replace the <PASSWORD> with the db User password that you created under the Security tab.
 - Note that after some of the steps in the Atlas UI, you may see a banner stating `We are deploying your changes`.  You will need to wait for the deployment to finish before using the DB in your application.
 
@@ -1423,7 +1460,7 @@ Add this to `package.json`, after *name* and *version*. This is necessary becaus
 
     ```
 
-**Done**, now go to the staging domain(`<host>.mybluemix.net`.) and see your app running.
+**Done**, now go to the staging domain (`<host>.mybluemix.net`) and see your app running.
 
 [Cloud Foundry Commands](https://console.ng.bluemix.net/docs/cli/reference/bluemix_cli/index.html)
 [More Bluemix samples](https://ibm-bluemix.github.io/)
@@ -1454,7 +1491,7 @@ Be sure to check out the full list of Watson services to forwarder enhance your 
 
 **<img src="https://wbi.mybluemix.net/icons/tone-analyzer.svg?version=2" width="25"> [Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/)** - Understand emotions, social tendencies and perceived writing style.
 
-**<img src="https://kpprod1.alchemyapi.com/images/vis_rec.svg" width="25"> [Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/)** - Tag, classify and search visual content using machine learning.
+**<img src="https://1.cms.s81c.com/sites/default/files/2019-02-21/1_VisualRecognitionHero.png" width="25"> [Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/)** - Tag, classify and search visual content using machine learning.
 
 
 
@@ -1513,7 +1550,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2019 Sahat Yalkabov
+Copyright (c) 2014-2020 Sahat Yalkabov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
